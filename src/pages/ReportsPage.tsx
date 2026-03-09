@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { FileText, Download, Search, Filter, AlertCircle, CheckCircle2, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { generatePatientPDF } from "@/lib/generateReport";
 
 const mockReports = [
   { id: "RPT-2847", patient: "Patient #4821", date: "Mar 9, 2026", status: "infected" as const, confidence: 94.2, species: "P. falciparum" },
@@ -84,7 +85,7 @@ const ReportsPage = () => {
                 </span>
                 <span className="text-xs text-muted-foreground w-16 text-right">{r.confidence}%</span>
                 <span className="text-xs text-muted-foreground w-24">{r.species}</span>
-                <Button variant="outline" size="sm" className="gap-1 shrink-0">
+                <Button variant="outline" size="sm" className="gap-1 shrink-0" onClick={() => generatePatientPDF(r)}>
                   <Download size={14} /> PDF
                 </Button>
               </div>

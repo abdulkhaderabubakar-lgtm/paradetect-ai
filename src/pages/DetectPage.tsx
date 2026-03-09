@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Microscope, AlertCircle, CheckCircle2, Loader2, FileImage, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { generatePatientPDF } from "@/lib/generateReport";
 
 type Result = {
   prediction: "infected" | "uninfected";
@@ -222,7 +223,18 @@ const DetectPage = () => {
                       Analyzed: {result.timestamp}
                     </div>
 
-                    <Button variant="outline" size="sm" className="w-full gap-2">
+                    <Button variant="outline" size="sm" className="w-full gap-2" onClick={() => {
+                      if (!result) return;
+                      const id = `RPT-${Date.now().toString().slice(-4)}`;
+                      generatePatientPDF({
+                        id,
+                        patient: `Patient #${Math.floor(1000 + Math.random() * 9000)}`,
+                        date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+                        status: result.prediction,
+                        confidence: result.confidence,
+                        species: result.prediction === "infected" ? "P. falciparum" : "—",
+                      });
+                    }}>
                       <FileImage size={14} /> Download Report (PDF)
                     </Button>
                   </motion.div>
