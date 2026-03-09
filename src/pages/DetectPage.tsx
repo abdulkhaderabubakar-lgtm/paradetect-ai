@@ -244,6 +244,11 @@ const DetectPage = () => {
             </div>
           </motion.div>
         </div>
+
+        {/* Post-Diagnosis Guidance */}
+        {result && (
+          <PostDiagnosisGuidance prediction={result.prediction} confidence={result.confidence} />
+        )}
       </div>
     </div>
   );
