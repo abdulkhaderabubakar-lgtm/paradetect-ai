@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Microscope, AlertCircle, CheckCircle2, Loader2, FileImage, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { generatePatientPDF } from "@/lib/generateReport";
+import PostDiagnosisGuidance from "@/components/PostDiagnosisGuidance";
 
 type Result = {
   prediction: "infected" | "uninfected";
@@ -243,6 +244,11 @@ const DetectPage = () => {
             </div>
           </motion.div>
         </div>
+
+        {/* Post-Diagnosis Guidance */}
+        {result && (
+          <PostDiagnosisGuidance prediction={result.prediction} confidence={result.confidence} />
+        )}
       </div>
     </div>
   );
